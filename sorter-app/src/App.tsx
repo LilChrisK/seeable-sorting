@@ -1,22 +1,31 @@
 import React from 'react';
 import logo from './logo.svg';
+import sunna from './sunna.png'
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src={sunna} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Suna karaadotir - kongur islands.
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://www.facebook.com/sunna.karadottir"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          facebook
+        </a>
+        <a
+          className="App-link"
+          href="https://www.instagram.com/sunnakara/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Insta :*
         </a>
       </header>
     </div>
