@@ -4,14 +4,20 @@ export type Numbers = {
   compareIndex: number | null;
 };
 
+export type NumbersUpdate = {
+  array?: number[];
+  i?: number | null;
+  j?: number | null;
+};
+
 export interface shuffleProps {
   numbers: Numbers;
-  setArray: React.Dispatch<React.SetStateAction<Numbers>>;
+  updateNumbers: (props: NumbersUpdate) => void;
   delay: number;
 }
 
 export interface bubbleProps {
     numbers: Numbers;
-    setArray: React.Dispatch<React.SetStateAction<Numbers>>;
+    setNumbers: React.Dispatch<React.SetStateAction<Numbers>>;
     delay: number;
 }

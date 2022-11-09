@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { Column } from "./components/Column";
-import { bubbleSort, shuffle } from "./functions/sortFunctions";
-import { Numbers } from "./types";
+import { bubbleSort, insertionSort, shuffle } from "./functions/sortFunctions";
+import { Numbers, NumbersUpdate } from "./types";
 
 // const ara = Array.from({length: 40}, () => Math.floor(Math.random() * 40));
 const arr = Array.from(Array(50).keys());
@@ -15,9 +15,25 @@ function App() {
     compareIndex: null,
   });
 
-  const handleShuffle = async () => {
-    await shuffle({ numbers: numbers, setArray: setNumbers, delay: 100 });
-  };
+  function updateNumbers(props: NumbersUpdate) {
+    let { array, i, j } = props;
+
+    if (array === undefined) {
+      array = [...numbers.array];
+    }
+    if (i === undefined) {
+      i = numbers.pivotIndex;
+    }
+    if (j === undefined) {
+      j = numbers.compareIndex;
+    }
+
+    setNumbers({
+      array: array,
+      pivotIndex: i,
+      compareIndex: j,
+    });
+  }
 
   return (
     <div className="bg-slate-700 min-h-screen flex flex-col items-center justify-center">
@@ -37,16 +53,32 @@ function App() {
       <div className="flex flex-row gap-2">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={async () => shuffle({ numbers: numbers, setArray: setNumbers, delay: 50 })}
+          onClick={async () =>
+            shuffle({ numbers: numbers, updateNumbers: updateNumbers, delay: 10 })
+          }
           // onClick={handleShuffle}
         >
           Shuffle
         </button>
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={async () => bubbleSort({ numbers: numbers, setArray: setNumbers, delay: 50 })}
+          onClick={async () =>
+            bubbleSort({ numbers: numbers, updateNumbers: updateNumbers, delay: 1000 })
+          }
         >
           Bubble Sort
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={async () =>
+            insertionSort({
+              numbers: numbers,
+              setNumbers: setNumbers,
+              delay: 50,
+            })
+          }
+        >
+          insertion Sort
         </button>
       </div>
     </div>

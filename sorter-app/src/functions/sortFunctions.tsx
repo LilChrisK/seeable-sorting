@@ -6,92 +6,104 @@ function swap(arr: number[], idx1: number, idx2: number) {
   [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
 }
 
-function clearColors(setArray: React.Dispatch<React.SetStateAction<Numbers>>) {
+function setColors(
+  i: number | null,
+  j: number | null,
+  setArray: React.Dispatch<React.SetStateAction<Numbers>>
+) {
   setArray((p) => ({
     ...p,
-    pivotIndex: null,
-    compareIndex: null,
+    pivotIndex: i,
+    compareIndex: j,
   }));
 }
 
 //Fisher-Yates shuffle courtesy of https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 export async function shuffle(props: shuffleProps) {
-  const { numbers, setArray, delay } = props;
-  let arrayCopy = numbers.array;
-  const length = arrayCopy.length;
-  let currentIdx = 0;
-  let randomIdx: number;
+  const { numbers, updateNumbers, delay } = props;
+  let arr = numbers.array;
+  const length = arr.length;
+  let currIdx = 0;
+  let randIdx: number;
 
   // While there remain elements to shuffle.
-  while (currentIdx < length - 1) {
+  while (currIdx < length - 1) {
     // Pick a remaining element.
-    randomIdx = Math.floor(Math.random() * currentIdx);
-    currentIdx++;
+    randIdx = Math.floor(Math.random() * currIdx);
+    currIdx++;
+    // Color current pair and wait
+    updateNumbers({ i: currIdx + 1, j: randIdx });
+    await sleep(delay / 2);
 
-    // And swap it with the current element.
-    swap(arrayCopy, currentIdx, randomIdx);
-
-    // Delay and update UI
-    await sleep(delay);
-    setArray((p) => ({
-      ...p,
-      array: [...arrayCopy],
-      pivotIndex: currentIdx + 1,
-      compareIndex: randomIdx,
-    }));
+    // Swap current elements and update UI
+    swap(arr, currIdx, randIdx);
+    updateNumbers({ array: arr, i: randIdx, j: currIdx + 1 });
+    await sleep(delay / 2);
   }
-  clearColors(setArray);
+  //clear colors
+  updateNumbers({ i: null, j: null });
   return;
 }
 
-export async function bubbleSort(props: bubbleProps) {
-  const { numbers, setArray, delay } = props;
-  let arrayCopy = numbers.array;
-  const length = arrayCopy.length;
-  let currentIdx: number;
-  let compareIdx: number;
+export async function bubbleSort(props: shuffleProps) {
+  const { numbers, updateNumbers, delay } = props;
+  let arr = numbers.array;
+  const length = arr.length;
+  let i: number, j: number;
   let swapped: boolean;
 
-  for (currentIdx = 0; currentIdx < length - 1; currentIdx++) {
+  for (i = 0; i < length - 1; i++) {
     swapped = false;
-    for (compareIdx = 0; compareIdx < length - 1; compareIdx++) {
-      if (arrayCopy[compareIdx] > arrayCopy[compareIdx + 1]) {
-        swap(arrayCopy, compareIdx, compareIdx + 1);
+    // Repeadedly swap adjacent items if theyre in the wrong order.
+    for (j = 0; j < length - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        updateNumbers({ i: j, j: j + 1 });
+        await sleep(delay / 2);
+        swap(arr, j, j + 1);
         swapped = true;
-        await sleep(delay);
-        setArray((p) => ({
-          ...p,
-          array: [...arrayCopy],
-          pivotIndex: compareIdx,
-          compareIndex: compareIdx + 1,
-        }));
       }
+      // Update UI and delay
+      updateNumbers({ array: arr, i: j + 1, j: j });
+      await sleep(delay / 2);
     }
-
+    // If no swapp occured, exit the function.
     if (!swapped) {
-      clearColors(setArray);
+      //clear colors
+      updateNumbers({ i: null, j: null });
       break;
     }
   }
 }
 
-// function bubblsseSort(arr, n) {
-//   var i, j, temp;
-//   var swapped;
-//   for (i = 0; i < n - 1; i++) {
-//     swapped = false;
-//     for (j = 0; j < n - i - 1; j++) {
-//       if (arr[j] > arr[j + 1]) {
-//         // swap arr[j] and arr[j+1]
-//         temp = arr[j];
-//         arr[j] = arr[j + 1];
-//         arr[j + 1] = temp;
-//         swapped = true;
-//       }
-//     }
+// Function to sort an array using insertion sort
+export async function insertionSort(props: bubbleProps) {
+  const { numbers, setNumbers, delay } = props;
+  let arr = numbers.array;
+  const length = arr.length;
+  let i: number, j: number, key: number;
 
-//     // IF no two elements were
-//     // swapped by inner loop, then break
-//     if (swapped == false) break;
-//   }
-// }
+  for (i = 1; i < length; i++) {
+    key = arr[i];
+    j = i - 1;
+
+    /* Move elements of arr[0..i-1], that are 
+        greater than key, to one position ahead 
+        of their current position */
+    while (j >= 0 && arr[j] > key) {
+      setColors(j + 1, j, setNumbers);
+      await sleep(delay / 2);
+
+      swap(arr, j, j + 1);
+      // Update UI and delay
+      setColors(j, j + 1, setNumbers);
+      setNumbers((p) => ({
+        ...p,
+        array: [...arr],
+      }));
+      await sleep(delay / 2);
+
+      j--;
+    }
+  }
+  setColors(null, null, setNumbers);
+}
