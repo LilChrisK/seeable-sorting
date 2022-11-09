@@ -1,13 +1,13 @@
 export type Numbers = {
   array: number[];
-  pivotIndex: number | null;
-  compareIndex: number | null;
+  violetIdx: number | null;
+  roseIdx: number | null;
 };
 
 export type NumbersUpdate = {
   array?: number[];
-  i?: number | null;
-  j?: number | null;
+  violetIdx?: number | null;
+  roseIdx?: number | null;
 };
 
 export interface shuffleProps {

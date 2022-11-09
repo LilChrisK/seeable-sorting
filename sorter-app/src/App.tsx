@@ -11,27 +11,27 @@ const max = arr.length;
 function App() {
   const [numbers, setNumbers] = useState<Numbers>({
     array: arr,
-    pivotIndex: null,
-    compareIndex: null,
+    violetIdx: null,
+    roseIdx: null,
   });
 
   function updateNumbers(props: NumbersUpdate) {
-    let { array, i, j } = props;
+    let { array, violetIdx, roseIdx } = props;
 
     if (array === undefined) {
       array = [...numbers.array];
     }
-    if (i === undefined) {
-      i = numbers.pivotIndex;
+    if (violetIdx === undefined) {
+      violetIdx = numbers.violetIdx;
     }
-    if (j === undefined) {
-      j = numbers.compareIndex;
+    if (roseIdx === undefined) {
+      roseIdx = numbers.roseIdx;
     }
 
     setNumbers({
       array: array,
-      pivotIndex: i,
-      compareIndex: j,
+      violetIdx: violetIdx,
+      roseIdx: roseIdx,
     });
   }
 
@@ -43,8 +43,8 @@ function App() {
             key={n}
             value={n}
             selfIndex={i}
-            pivotIndex={numbers.pivotIndex}
-            compareIndex={numbers.compareIndex}
+            violetIdx={numbers.violetIdx}
+            roseIdx={numbers.roseIdx}
             size={max}
           />
         ))}
@@ -54,7 +54,11 @@ function App() {
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={async () =>
-            shuffle({ numbers: numbers, updateNumbers: updateNumbers, delay: 10 })
+            shuffle({
+              numbers: numbers,
+              updateNumbers: updateNumbers,
+              delay: 10,
+            })
           }
           // onClick={handleShuffle}
         >
@@ -63,7 +67,11 @@ function App() {
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={async () =>
-            bubbleSort({ numbers: numbers, updateNumbers: updateNumbers, delay: 1000 })
+            bubbleSort({
+              numbers: numbers,
+              updateNumbers: updateNumbers,
+              delay: 1000,
+            })
           }
         >
           Bubble Sort

@@ -4,20 +4,20 @@ import { Numbers } from "../types";
 interface ColumnProps {
   value: number
   selfIndex: number;
-  pivotIndex: number | null;
-  compareIndex: number | null;
+  violetIdx: number | null;
+  roseIdx: number | null;
   size: number;
 }
 
 export function Column(props: ColumnProps) {
-  const {value, selfIndex, pivotIndex, compareIndex, size} = props
+  const {value, selfIndex, violetIdx, roseIdx, size} = props
 
   function getBgColor() {
     
     switch(selfIndex) {
-      case pivotIndex:
+      case violetIdx:
         return 'bg-violet-900'
-      case compareIndex:
+      case roseIdx:
         return 'bg-rose-900'
       default:
         return 'bg-sky-700'
