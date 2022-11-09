@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Column } from "./components/Column";
-import { shuffle } from "./functions/sortFunctions";
+import { bubbleSort, shuffle } from "./functions/sortFunctions";
 import { Numbers } from "./types";
 
 // const ara = Array.from({length: 40}, () => Math.floor(Math.random() * 40));
@@ -33,12 +33,22 @@ function App() {
           />
         ))}
       </div>
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={handleShuffle}
-      >
-        Shuffle
-      </button>
+
+      <div className="flex flex-row gap-2">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={async () => shuffle({ numbers: numbers, setArray: setNumbers, delay: 50 })}
+          // onClick={handleShuffle}
+        >
+          Shuffle
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={async () => bubbleSort({ numbers: numbers, setArray: setNumbers, delay: 50 })}
+        >
+          Bubble Sort
+        </button>
+      </div>
     </div>
   );
 }
