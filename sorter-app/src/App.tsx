@@ -73,7 +73,7 @@ function App() {
           onClick={async () =>
             insertionSort({
               numbers: numbers,
-              setNumbers: setNumbers,
+              updateNumbers: updateNumbers,
               delay: 50,
             })
           }

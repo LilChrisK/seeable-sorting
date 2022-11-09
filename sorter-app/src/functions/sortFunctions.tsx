@@ -76,8 +76,8 @@ export async function bubbleSort(props: shuffleProps) {
 }
 
 // Function to sort an array using insertion sort
-export async function insertionSort(props: bubbleProps) {
-  const { numbers, setNumbers, delay } = props;
+export async function insertionSort(props: shuffleProps) {
+  const { numbers, updateNumbers, delay } = props;
   let arr = numbers.array;
   const length = arr.length;
   let i: number, j: number, key: number;
@@ -90,20 +90,21 @@ export async function insertionSort(props: bubbleProps) {
         greater than key, to one position ahead 
         of their current position */
     while (j >= 0 && arr[j] > key) {
-      setColors(j + 1, j, setNumbers);
+      updateNumbers({i: j + 1, j: j });
       await sleep(delay / 2);
 
       swap(arr, j, j + 1);
       // Update UI and delay
-      setColors(j, j + 1, setNumbers);
-      setNumbers((p) => ({
-        ...p,
-        array: [...arr],
-      }));
+      updateNumbers({array: arr ,i: j, j: j +1 });
+      // setNumbers((p) => ({
+      //   ...p,
+      //   array: [...arr],
+      // }));
       await sleep(delay / 2);
 
       j--;
     }
   }
-  setColors(null, null, setNumbers);
+  // Clear colors
+  updateNumbers({ i: null, j: null });
 }
