@@ -1,19 +1,15 @@
-import { Numbers } from "../types";
+import { bubbleProps, Numbers, shuffleProps } from "../types";
 import { sleep } from "./sleep";
 
-interface shuffleProps {
-  numbers: Numbers;
-  setArray: React.Dispatch<React.SetStateAction<Numbers>>;
-  delay: number;
-}
+
 
 //Fisher-Yates shuffle courtesy of https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 export async function shuffle(props: shuffleProps) {
-  const {numbers, setArray, delay} = props
-  let arrayCopy = numbers.array
+  const { numbers, setArray, delay } = props;
+  let arrayCopy = numbers.array;
   const length = arrayCopy.length;
   let currentIndex = 0;
-  let randomIndex;
+  let randomIndex: number;
 
   // While there remain elements to shuffle.
   while (currentIndex < length - 1) {
@@ -27,8 +23,23 @@ export async function shuffle(props: shuffleProps) {
       arrayCopy[currentIndex],
     ];
 
-    setArray((p) => ({...p, array: [...arrayCopy]}));
     await sleep(delay);
+    setArray((p) => ({
+      ...p,
+      array: [...arrayCopy],
+      pivotIndex: currentIndex + 1,
+      compareIndex: randomIndex,
+    }));
   }
+  setArray((p) => ({
+    ...p,
+    pivotIndex: null,
+    compareIndex: null,
+  }));
   return;
+}
+
+
+export async function bubbleSort(props: bubbleProps) {
+  
 }

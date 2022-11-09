@@ -1,14 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import { Column } from "./components/Column";
-import { shuffle } from "./functions/shuffle";
+import { shuffle } from "./functions/sortFunctions";
 import { Numbers } from "./types";
 
 // const ara = Array.from({length: 40}, () => Math.floor(Math.random() * 40));
 const arr = Array.from(Array(50).keys());
 const max = arr.length;
-
-
 
 function App() {
   const [numbers, setNumbers] = useState<Numbers>({
@@ -18,14 +16,21 @@ function App() {
   });
 
   const handleShuffle = async () => {
-    await shuffle({ numbers: numbers, setArray: setNumbers, delay: 20 });
+    await shuffle({ numbers: numbers, setArray: setNumbers, delay: 100 });
   };
 
   return (
     <div className="bg-slate-700 min-h-screen flex flex-col items-center justify-center">
       <div className="mb-4 flex w-96 h-64 border-2 border-emerald-500">
-        {numbers.array.map((n) => (
-          <Column key={n} n={n} max={max} />
+        {numbers.array.map((n, i) => (
+          <Column
+            key={n}
+            value={n}
+            selfIndex={i}
+            pivotIndex={numbers.pivotIndex}
+            compareIndex={numbers.compareIndex}
+            size={max}
+          />
         ))}
       </div>
       <button
