@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Button } from "./components/Button";
 import { Column } from "./components/Column";
 import { bubbleSort, insertionSort, shuffle } from "./functions/sortFunctions";
 import { Numbers, NumbersUpdate } from "./types";
@@ -51,8 +52,7 @@ function App() {
       </div>
 
       <div className="flex flex-row gap-2">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        <Button
           onClick={async () =>
             shuffle({
               numbers: numbers,
@@ -60,12 +60,10 @@ function App() {
               delay: 10,
             })
           }
-          // onClick={handleShuffle}
         >
-          Shuffle
-        </button>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          shuffle
+        </Button>
+        <Button
           onClick={async () =>
             bubbleSort({
               numbers: numbers,
@@ -75,9 +73,8 @@ function App() {
           }
         >
           Bubble Sort
-        </button>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        </Button>
+        <Button
           onClick={async () =>
             insertionSort({
               numbers: numbers,
@@ -87,7 +84,7 @@ function App() {
           }
         >
           insertion Sort
-        </button>
+        </Button>
       </div>
     </div>
   );
