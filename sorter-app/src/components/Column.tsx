@@ -1,5 +1,4 @@
 import React from "react";
-import { Numbers } from "../types";
 
 interface ColumnProps {
   value: number

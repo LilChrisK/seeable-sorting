@@ -70,7 +70,7 @@ function App() {
             bubbleSort({
               numbers: numbers,
               updateNumbers: updateNumbers,
-              delay: 1000,
+              delay: 10,
             })
           }
         >
@@ -82,7 +82,7 @@ function App() {
             insertionSort({
               numbers: numbers,
               updateNumbers: updateNumbers,
-              delay: 50,
+              delay: 5,
             })
           }
         >
