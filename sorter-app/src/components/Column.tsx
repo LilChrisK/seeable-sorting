@@ -27,7 +27,6 @@ export function Column(props: ColumnProps) {
     <div className="flex flex-col-reverse grow bg-slate-400">
       <div
         className={`border border-slate-500 ${getBgColor()}`}
-        // className="bg-sky-700 border border-slate-500"
         style={{ height: `${(value / size) * 100}%` }} />
     </div>
   );
